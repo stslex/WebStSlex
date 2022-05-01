@@ -58,7 +58,8 @@ jobs:
       - name: Checkout branch
         uses: actions/checkout@v3
         with:
-          repository: stslex.github.io
+          repository: stslex/stslex.github.io
+          token: ${{ secrets.PUSH_TOKEN }}
 
       - name: Create local changes
         run: |
@@ -86,5 +87,5 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PUSH_TOKEN }}
-          repository: stslex.github.io
+          repository: stslex/stslex.github.io
           branch: main
