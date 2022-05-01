@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="WebStSlex-js-1.0">
+    <output-path>$PROJECT_DIR$/build/libs</output-path>
+    <root id="archive" name="WebStSlex-js-1.0.jar">
+      <element id="module-output" name="WebStSlex.jsMain" />
+    </root>
+  </artifact>
+</component>
