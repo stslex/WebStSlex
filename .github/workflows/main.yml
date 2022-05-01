@@ -1,4 +1,4 @@
-name: Send Report to Project
+name: Send Site to Pages
 on:
   push:
     branches: [ master ]
@@ -6,8 +6,8 @@ on:
 
 jobs:
 
-  unitTests:
-    name: Run Tests
+  build:
+    name: Run project build
     runs-on: ubuntu-latest
 
     steps:
@@ -35,48 +35,56 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-.
+
       - name: Build application
-        run: ./gradlew koverReport --full-stacktrace
+        run: ./gradlew build --full-stacktrace
 
       - name: Check report files
         run: |
-          ls app/build/reports/kover/project-html
+          ls build/distributions
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:
-          name: code-coverage-report
-          path: app/build/reports/kover/project-html
+          name: code-build-report
+          path: build/distributions
 
-  saveReport:
+  saveFiles:
     name: SaveReport
     runs-on: ubuntu-latest
-    needs: [ unitTests ]
+    needs: [ build ]
     steps:
 
       - name: Checkout branch
         uses: actions/checkout@v3
+        with:
+          repository: stslex.github.io
 
       - name: Create local changes
         run: |
-          rm -rf docs/reports
-          mkdir docs/reports
+          rm -rf docs
+          mkdir docs
+
       - name: Download report
         uses: actions/download-artifact@v3
         with:
-          name: code-coverage-report
-          path: docs/reports
+          name: code-build-report
+          path: docs
 
       - name: Check report files
         run: |
-          ls docs/reports
+          ls docs
+
       - name: Commit files
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add docs/reports
+          git add docs
           git commit -m "Add changes" -a
+
       - name: Push changd
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.PUSH_TOKEN }}
-          branch: ${{ github.ref }}
+          repository: stslex.github.io
+          branch: main
