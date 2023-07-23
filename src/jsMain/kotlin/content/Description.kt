@@ -11,10 +11,9 @@ import style.*
 @Composable
 fun Description() {
     ContainerInSection {
-        Div(
-            {
-                classes(WtRows.wtRow, WtRows.wtRowSizeM)
-            }) {
+        Div({
+            classes(WtRows.wtRow, WtRows.wtRowSizeM)
+        }) {
 
             Div({
                 classes(
