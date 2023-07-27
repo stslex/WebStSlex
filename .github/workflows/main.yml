@@ -100,7 +100,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: code-build-report
-          path: site
+          path: docs
 
       - name: SSH Command
         uses: siva1024/scp-deployer@v1.0
