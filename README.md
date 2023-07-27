@@ -1,4 +1,6 @@
-This is a [Kobweb](https://github.com/varabyte/kobweb) project bootstrapped with the `app` template.
+site - https://stslex.github.io/
+
+This is a site made with [Kobweb](https://github.com/varabyte/kobweb) project bootstrapped with the `app` template.
 
 ## Getting Started
 
