@@ -1,0 +1,14 @@
+site:
+  title: "WebStSlex"
+
+server:
+  files:
+    dev:
+      contentRoot: "build/processedResources/js/main/public"
+      script: "build/developmentExecutable/WebStSlex.js"
+      api: "build/libs/WebStSlex.jar"
+    prod:
+      script: "build/distributions/WebStSlex.js"
+      siteRoot: ".kobweb/site"
+
+  port: 8080
