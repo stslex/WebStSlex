@@ -11,7 +11,7 @@ import org.jetbrains.compose.web.dom.Text
 @Page
 @Composable
 fun HomePage() {
-    PageLayout("Welcome to Kobweb!") {
+    PageLayout("Welcome to Kobweb! by StsSlex") {
         Text("Please enter your name")
         var name by remember { mutableStateOf("") }
         Input(
