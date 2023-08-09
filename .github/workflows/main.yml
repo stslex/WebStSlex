@@ -62,5 +62,6 @@ jobs:
           script: |
             docker pull stslex/web:latest
             docker kill $(docker ps -a -f name=webApp_latest -q)
+            docker remove $(docker ps -a -f name=webApp_latest -q)
             docker remove $(docker ps -a -f status=exited -q)
             docker run -d -p 81:8080 --name webApp_latest --network postgress_network --restart always stslex/web:latest gradle :webApp:jsBrowserProductionRun
