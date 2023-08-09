@@ -16,7 +16,11 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun WebApp() {
-    Box(Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.background)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -25,12 +29,14 @@ fun WebApp() {
         ) {
             Text(
                 text = "Hello to my first web site",
-                style = MaterialTheme.typography.h2
+                style = MaterialTheme.typography.h2,
+                color = MaterialTheme.colors.onBackground
             )
             Spacer(Modifier.height(32.dp))
             Text(
                 text = "This site is Made With Jetpack Web Compose (Kotlin/Wasm)",
-                style = MaterialTheme.typography.h4
+                style = MaterialTheme.typography.h4,
+                color = MaterialTheme.colors.onBackground
             )
             Spacer(Modifier.height(64.dp))
             Spacer(Modifier.height(16.dp))
@@ -52,15 +58,16 @@ fun Playground(
         modifier = modifier
             .shadow(
                 elevation = 32.dp,
-                shape = RoundedCornerShape(32.dp)
+                shape = RoundedCornerShape(32.dp),
             )
-            .background(MaterialTheme.colors.surface)
+            .background(MaterialTheme.colors.secondaryVariant)
             .padding(32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "simple playground",
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.h5,
+            color = MaterialTheme.colors.onSecondary
         )
         Spacer(Modifier.height(16.dp))
         Row {
@@ -71,13 +78,15 @@ fun Playground(
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSecondary
                 )
             }
             Spacer(Modifier.width(32.dp))
             Text(
                 text = resultNumber.toString(),
-                style = MaterialTheme.typography.h4
+                style = MaterialTheme.typography.h4,
+                color = MaterialTheme.colors.onSecondary
             )
             Spacer(Modifier.width(32.dp))
             IconButton(
@@ -87,7 +96,8 @@ fun Playground(
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colors.onSecondary
                 )
             }
         }
