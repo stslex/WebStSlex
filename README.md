@@ -1,3 +1,8 @@
-site - https://stslex.github.io/
+# Kotlin Multiplatform (KMP)
 
-This is a site made with [Kobweb](https://github.com/varabyte/kobweb) project bootstrapped with the `app` template.
+## Web Compose (kotlin/wasm)
+
+## Deployment
+
+http://46.151.30.82:81 <br>
+with Dockerfile on self-hosted server
