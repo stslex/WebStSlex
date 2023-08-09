@@ -92,7 +92,7 @@ fun Playground(
             IconButton(
                 onClick = {
                     resultNumber++
-                }
+                },
             ) {
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
