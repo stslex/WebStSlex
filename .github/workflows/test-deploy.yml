@@ -1,15 +1,9 @@
-name: Send Site to Pages
+name: Dev deploy
 
 on:
   pull_request:
     branches: [ master ]
-  push:
-    branches: [ master ]
   workflow_dispatch:
-
-permissions:
-  checks: write
-  pull-requests: write
 
 jobs:
   build:
@@ -18,22 +12,6 @@ jobs:
     timeout-minutes: 60
 
     steps:
-
-      - name: Checkout branch
-        uses: actions/checkout@v2
-
-      - name: set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: gradle
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Build with Gradle
-        run: ./gradlew build
 
       - name: Set up Docker Build
         uses: docker/setup-buildx-action@v2
@@ -48,9 +26,8 @@ jobs:
         uses: docker/build-push-action@v4.1.1
         with:
           push: true
-          tags: stslex/web:latest
+          tags: stslex/web:test
           platforms: linux/amd64
-          context: .
 
       - name: SSH Command
         uses: appleboy/ssh-action@v0.1.10
@@ -61,7 +38,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH }}
           script: |
             docker pull stslex/web:latest
-            docker kill $(docker ps -a -f name=webApp_latest -q)
-            docker remove $(docker ps -a -f name=webApp_latest -q)
+            docker kill $(docker ps -a -f name=webApp_test -q)
+            docker remove $(docker ps -a -f name=webApp_test -q)
             docker remove $(docker ps -a -f status=exited -q)
-            docker run -d -p 81:8080 --name webApp_latest --network postgress_network --restart always stslex/web:latest gradle :webApp:jsBrowserProductionRun
+            docker run -d -p 82:8080 --name webApp_test --network postgress_network --restart always stslex/web:test gradle :webApp:jsBrowserProductionRun

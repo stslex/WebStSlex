@@ -1,0 +1,44 @@
+name: Prod deploy
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4.1.1
+        with:
+          push: true
+          tags: stslex/web:latest
+          platforms: linux/amd64
+
+      - name: SSH Command
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          key: ${{ secrets.SERVER_SSH }}
+          script: |
+            docker pull stslex/web:latest
+            docker kill $(docker ps -a -f name=webApp_latest -q)
+            docker remove $(docker ps -a -f name=webApp_latest -q)
+            docker remove $(docker ps -a -f status=exited -q)
+            docker run -d -p 81:8080 --name webApp_latest --network postgress_network --restart always stslex/web:latest gradle :webApp:jsBrowserProductionRun
