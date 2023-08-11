@@ -49,8 +49,15 @@ kotlin {
                 implementation(compose.components.resources)
             }
         }
+        val wasmMain by getting {
+            dependsOn(jsWasmMain)
+        }
         val jsMain by getting {
             dependsOn(jsWasmMain)
+            dependencies {
+                implementation("io.ktor:ktor-client-core:2.3.3")
+                implementation("io.ktor:ktor-client-js:2.3.3")
+            }
         }
     }
 }

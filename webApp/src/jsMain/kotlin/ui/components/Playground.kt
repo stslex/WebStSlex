@@ -1,3 +1,5 @@
+package ui.components
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,47 +15,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
-
-@Composable
-fun WebApp() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(32.dp)
-        ) {
-            Text(
-                text = "Hello to my first web site",
-                style = MaterialTheme.typography.h2,
-                color = MaterialTheme.colors.onBackground
-            )
-            Spacer(Modifier.height(32.dp))
-            Text(
-                text = "This site is Made With Jetpack Web Compose (Kotlin/Wasm)",
-                style = MaterialTheme.typography.h4,
-                color = MaterialTheme.colors.onBackground
-            )
-            Spacer(Modifier.height(64.dp))
-            Spacer(Modifier.height(16.dp))
-            Playground(
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-        }
-    }
-}
+import cookie.CookieController
+import cookie.CookieType
 
 @Composable
 fun Playground(
     modifier: Modifier = Modifier
 ) {
     var resultNumber by remember {
-        mutableStateOf(0)
+        mutableStateOf(CookieController.getInt(CookieType.RESULT_NUMBER))
     }
+
+    LaunchedEffect(resultNumber) {
+        CookieController.setCookie(
+            type = CookieType.RESULT_NUMBER,
+            value = resultNumber
+        )
+    }
+
     Column(
         modifier = modifier
             .shadow(
